@@ -1,39 +1,40 @@
+"use client";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FaPlus } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
-const getBlog = async () => {
-  try {
-    
-    const res = await fetch("${process.env.NEXT_PUBLIC_VERCEL_URL}/api/blog", {
-      cache: "no-store",
-    });
+interface IBlog{
+  _id: string;
+  title: string;
+  content: string;
+  author: string;
+}
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch Blogs.");
-    }
-    const data = await res.json();
-    return data;
-    
-  } catch (error) {
-    console.log("Error loading blogs:", error);
-    throw error;
-  }
-};
+export default function BlogInfo() {
+  const { data: session }: any = useSession();
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
 
-export default async function BlogInfo() {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/blog");
+        const data = await res.json();
+        setBlogs(data.blogs);
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+        throw error;
+      }
+    };
 
-  const session = await getServerSession();
+    fetchData();
+  },[]);
+
   if (!session) {
-    redirect("/");
+    redirect("/login");
   }
-
-  const data = await getBlog();
-  console.log(data); // Check if data is retrieved
-  const blogs = data?.blogs || [];
-
-  
 
   return (
     <div className="bg-white py-24 sm:py-10">
@@ -51,8 +52,8 @@ export default async function BlogInfo() {
         </div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           <>
-            {blogs.map((t: any, index: any) => (
-              <article key={index} className="flex max-w-xl flex-col items-start justify-between">
+            {blogs.map((t: any) => (
+              <article key={t._id} className="flex max-w-xl flex-col items-start justify-between">
                 <div className="flex items-center gap-x-4 text-xs">
                   <time className="text-gray-500">
                     <time className="text-gray-500">
