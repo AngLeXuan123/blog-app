@@ -17,6 +17,8 @@ export default function AddBlog() {
     const [content, setContent] = useState("");
     const [errors, setErrors] = useState<FormErrors>({});
 
+    
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 

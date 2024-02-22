@@ -1,12 +1,12 @@
 "use client";
-import { getServerSession } from "next-auth";
+
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FaPlus } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-interface IBlog{
+interface IBlog {
   _id: string;
   title: string;
   content: string;
@@ -14,7 +14,8 @@ interface IBlog{
 }
 
 export default function BlogInfo() {
-  const { data: session }: any = useSession();
+  const { data: session, status }: any = useSession();
+
   const [blogs, setBlogs] = useState<IBlog[]>([]);
 
   useEffect(() => {
@@ -30,11 +31,25 @@ export default function BlogInfo() {
     };
 
     fetchData();
-  },[]);
+  }, []);
 
-  if (!session) {
-    redirect("/login");
+  useEffect(() => {
+    // Wait for the session to be loaded before making decisions
+    if (status === "loading") {
+      return;
+    }
+
+    // If the user is not authenticated, redirect to the login page
+    if (!session) {
+      redirect("/login");
+    }
+  }, [status, session]);
+
+  if (status === "loading") {
+    // You can show a loading spinner or a message while the session is loading
+    return <p>Loading...</p>;
   }
+
 
   return (
     <div className="bg-white py-24 sm:py-10">
