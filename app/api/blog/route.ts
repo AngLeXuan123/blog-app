@@ -23,8 +23,17 @@ export const POST = async (request: any) => {
     }
 };
 
-export const GET = async () =>{
+export const GET = async () => {
     await connectMongoDB();
-    const blogs = await Blog.find();
-    return NextResponse.json({blogs});
+
+    try {
+        const blogs = await Blog.find();
+        return NextResponse.json({ blogs });
+    } catch (err: any) {
+        console.error("Error feching blogs:", err);
+        return new NextResponse(err, {
+            status: 500,
+        })
+    }
+
 }
