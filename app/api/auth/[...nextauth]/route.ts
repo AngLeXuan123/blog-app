@@ -1,5 +1,5 @@
 
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/users";
 import connectMongoDB from "@/libs/mongodb";
@@ -38,5 +38,6 @@ const authOptions: any = {
     ],
 }
 
-export const hand = NextAuth(authOptions);
-export { hand as GET, hand as POST };
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
