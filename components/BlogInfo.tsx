@@ -5,18 +5,20 @@ import { FaPlus } from "react-icons/fa";
 
 const getBlog = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/blog", {
+    
+    const res = await fetch("${process.env.NEXT_PUBLIC_VERCEL_URL}/api/blog", {
       cache: "no-store",
     });
 
     if (!res.ok) {
-      throw new Error("Failed to fetch Blogs");
+      throw new Error("Failed to fetch Blogs.");
     }
     const data = await res.json();
     return data;
     
   } catch (error) {
     console.log("Error loading blogs:", error);
+    throw error;
   }
 };
 
@@ -28,6 +30,7 @@ export default async function BlogInfo() {
   }
 
   const data = await getBlog();
+  console.log(data); // Check if data is retrieved
   const blogs = data?.blogs || [];
 
   
