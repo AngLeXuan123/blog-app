@@ -2,7 +2,6 @@
 
 export default function Home() {
   return (
-    <h1>hello world!dasd  </h1>
-    
+        <h1>hello world! Welcome to Blog App</h1>
   );
 }
