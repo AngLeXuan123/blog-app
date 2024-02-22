@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+
 
 export default function Navbar() {
 
@@ -12,11 +12,7 @@ export default function Navbar() {
         <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href={'/'} className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <Image
-                        className="mx-auto h-10 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company"
-                    />
+                   
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">My Blog</span>
                 </Link>
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
