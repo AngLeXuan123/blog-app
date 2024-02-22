@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { getServerSession } from "next-auth"; //if use server component, check user login or not
 import SessionProvider from "@/libs/SessionProvider";
+import Script from "next/script";
 
 
 
@@ -33,7 +34,7 @@ export default async function RootLayout({
             </div>
           </div>
         </SessionProvider>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+        <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></Script>
       </body>
     </html>
   );
